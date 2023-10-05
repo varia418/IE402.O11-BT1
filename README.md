@@ -3,21 +3,21 @@
 ## The Graph demonstrate Git branchs
 ```mermaid
 graph TD;
-    gitLocal-->development;
-    development-->main;
+    gitLocal-->develop;
+    develop-->main;
 ```
 ## First time
 1. Clone repository
 ```
 git clone https://github.com/varia418/IE402.O11-BT1.git
 ```
-2. Create and switch to `development` branch
+2. Create and switch to `develop` branch
 ```
-git checkout -b development
+git checkout develop
 ```
-3. Pull code from `development` branch
+3. Pull code from `develop` branch
 ```
-git pull origin development
+git pull origin develop
 ```
 4. Create your branch at git local
 ```
