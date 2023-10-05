@@ -1,41 +1,77 @@
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Thu Duc Maps</title>
 
     <style>
-      html,
-      body,
-      #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
     </style>
 
     <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
     <script src="https://js.arcgis.com/4.27/"></script>
 
     <script>
-      require(["esri/config", "esri/Map", "esri/views/MapView"], function(esriConfig, Map, MapView) {
-        const map = new Map({
-          basemap: "hybrid"
-        });
+        require(["esri/Map", "esri/views/MapView", "esri/Graphic"], (Map, MapView, Graphic) => {
+            const map = new Map({
+                basemap: "hybrid"
+            });
 
-        const view = new MapView({
-          map: map,
-          center: [106.730573, 10.736569], // Longitude, latitude
-          zoom: 15, // Zoom level
-          container: "viewDiv" // Div element
-        });
+            const view = new MapView({
+                map: map,
+                center: [106.730573, 10.736569], // Longitude, latitude
+                zoom: 15, // Zoom level
+                container: "viewDiv" // Div element
+            });
 
-      });
+            const tanQuyWardOSMId = 2766954;
+
+            async function getGeo(OSMId) {
+                const response = await fetch(`http://polygons.openstreetmap.fr/get_geojson.py?id=${OSMId}&params=0`);
+                const result = await response.json();
+                return result.coordinates[0];
+            }
+
+            const fillSymbol = {
+                type: "simple-fill",
+                color: [227, 139, 79, 0.8],
+                outline: {
+                    color: [255, 255, 255],
+                    width: 1
+                }
+            };
+
+            async function addWardPolygonGraphic() {
+                const coordinates = await getGeo(tanQuyWardOSMId);
+                const wardPolygon = {
+                    type: "polygon",
+                    rings: coordinates
+                };
+
+                const wardPolygonGraphic = new Graphic({
+                    geometry: wardPolygon,
+                    symbol: fillSymbol
+                });
+
+                view.graphics.add(wardPolygonGraphic);
+            }
+
+            addWardPolygonGraphic();
+        });
     </script>
 
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="viewDiv"></div>
-  </body>
+</body>
+
 </html>
