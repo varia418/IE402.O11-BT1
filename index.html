@@ -33,6 +33,11 @@
             });
 
             const tanQuyWardOSMId = 2766954;
+            const tanQuyWardAttributes = {
+                "Tên": "Phường Tân Quy",
+                "Dân số": "27.689 người",
+                "Mật độ": "32.196 người/km²",
+            }
 
             async function getGeo(OSMId) {
                 const response = await fetch(`http://polygons.openstreetmap.fr/get_geojson.py?id=${OSMId}&params=0`);
@@ -49,8 +54,8 @@
                 }
             };
 
-            async function addWardPolygonGraphic() {
-                const coordinates = await getGeo(tanQuyWardOSMId);
+            async function addWardPolygonGraphic(OSMId, attributes) {
+                const coordinates = await getGeo(OSMId);
                 const wardPolygon = {
                     type: "polygon",
                     rings: coordinates
@@ -58,13 +63,33 @@
 
                 const wardPolygonGraphic = new Graphic({
                     geometry: wardPolygon,
-                    symbol: fillSymbol
+                    symbol: fillSymbol,
+                    attributes: attributes,
+                    popupTemplate: {
+                        title: "{Tên}",
+                        content: [
+                            {
+                                type: "fields",
+                                fieldInfos: [
+                                    {
+                                        fieldName: "Tên"
+                                    },
+                                    {
+                                        fieldName: "Dân số"
+                                    },
+                                    {
+                                        fieldName: "Mật độ"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 });
 
                 view.graphics.add(wardPolygonGraphic);
             }
 
-            addWardPolygonGraphic();
+            addWardPolygonGraphic(tanQuyWardOSMId, tanQuyWardAttributes);
         });
     </script>
 
