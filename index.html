@@ -32,11 +32,12 @@
                 container: "viewDiv" // Div element
             });
 
-            const tanQuyWardOSMId = 2766954;
-            const tanQuyWardAttributes = {
-                "Tên": "Phường Tân Quy",
-                "Dân số": "27.689 người",
-                "Mật độ": "32.196 người/km²",
+            const TanPhongWardOSMId = 2766952;
+            const TanPhongWardAtt = {
+                "Tên": "Phường Tân Phong",
+                "Dân số": "36.572 người",
+                "Mật độ": "8.163 người/km²",
+                "color": [0,0,255, 0.8]
             }
 
             async function getGeo(OSMId) {
@@ -45,14 +46,6 @@
                 return result.coordinates[0];
             }
 
-            const fillSymbol = {
-                type: "simple-fill",
-                color: [227, 139, 79, 0.8],
-                outline: {
-                    color: [255, 255, 255],
-                    width: 1
-                }
-            };
 
             async function addWardPolygonGraphic(OSMId, attributes) {
                 const coordinates = await getGeo(OSMId);
@@ -60,6 +53,15 @@
                     type: "polygon",
                     rings: coordinates
                 };
+
+                const fillSymbol = {
+                type: "simple-fill",
+                color: attributes.color,
+                outline: {
+                    color: [255, 255, 255],
+                    width: 1
+                }
+            };
 
                 const wardPolygonGraphic = new Graphic({
                     geometry: wardPolygon,
@@ -89,7 +91,7 @@
                 view.graphics.add(wardPolygonGraphic);
             }
 
-            addWardPolygonGraphic(tanQuyWardOSMId, tanQuyWardAttributes);
+            addWardPolygonGraphic(TanPhongWardOSMId, TanPhongWardAtt);
         });
     </script>
 
