@@ -1,104 +1,159 @@
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
     <title>District 7 Maps</title>
 
     <style>
-        html,
-        body,
-        #viewDiv {
-            padding: 0;
-            margin: 0;
-            height: 100%;
-            width: 100%;
-        }
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
     </style>
 
-    <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.27/esri/themes/light/main.css"
+    />
     <script src="https://js.arcgis.com/4.27/"></script>
 
     <script>
-        require(["esri/Map", "esri/views/MapView", "esri/Graphic"], (Map, MapView, Graphic) => {
-            const map = new Map({
-                basemap: "hybrid"
-            });
-
-            const view = new MapView({
-                map: map,
-                center: [106.730573, 10.736569], // Longitude, latitude
-                zoom: 15, // Zoom level
-                container: "viewDiv" // Div element
-            });
-
-            const TanPhongWardOSMId = 2766952;
-            const TanPhongWardAtt = {
-                "Tên": "Phường Tân Phong",
-                "Dân số": "36.572 người",
-                "Mật độ": "8.163 người/km²",
-                "color": [0,0,255, 0.8]
-            }
-
-            async function getGeo(OSMId) {
-                const response = await fetch(`http://polygons.openstreetmap.fr/get_geojson.py?id=${OSMId}&params=0`);
-                const result = await response.json();
-                return result.coordinates[0];
-            }
-
-
-            async function addWardPolygonGraphic(OSMId, attributes) {
-                const coordinates = await getGeo(OSMId);
-                const wardPolygon = {
-                    type: "polygon",
-                    rings: coordinates
-                };
-
-                const fillSymbol = {
-                type: "simple-fill",
-                color: attributes.color,
-                outline: {
-                    color: [255, 255, 255],
-                    width: 1
-                }
-            };
-
-                const wardPolygonGraphic = new Graphic({
-                    geometry: wardPolygon,
-                    symbol: fillSymbol,
-                    attributes: attributes,
-                    popupTemplate: {
-                        title: "{Tên}",
-                        content: [
-                            {
-                                type: "fields",
-                                fieldInfos: [
-                                    {
-                                        fieldName: "Tên"
-                                    },
-                                    {
-                                        fieldName: "Dân số"
-                                    },
-                                    {
-                                        fieldName: "Mật độ"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                });
-
-                view.graphics.add(wardPolygonGraphic);
-            }
-
-            addWardPolygonGraphic(TanPhongWardOSMId, TanPhongWardAtt);
+      require(["esri/Map", "esri/views/MapView", "esri/Graphic"], (
+        Map,
+        MapView,
+        Graphic
+      ) => {
+        const map = new Map({
+          basemap: "hybrid",
         });
+
+        const view = new MapView({
+          map: map,
+          center: [106.730573, 10.736569], // Longitude, latitude
+          zoom: 15, // Zoom level
+          container: "viewDiv", // Div element
+        });
+
+        
+        const TanPhongWardAtt = {
+          "Tên": "Phường Tân Phong",
+          "Dân số": "36.572 người",
+          "Mật độ": "8.163 người/km²",
+          "color": [0, 0, 255, 0.8],
+          "OSMId": 2766952
+        };
+
+        const NguyenThiThapAtt = {
+          "Tên": "Nguyễn Thị Thập",
+          "Chiều dài": "3.750m",
+          "color": [0, 255, 0, 0.8],
+          "coord":
+        };
+
+        async function getGeo(OSMId) {
+          const response = await fetch(
+            `http://polygons.openstreetmap.fr/get_geojson.py?id=${OSMId}&params=0`
+          );
+          const result = await response.json();
+          return result.coordinates[0];
+        }
+
+        async function addWardPolygonGraphic(attributes) {
+          const coordinates = await getGeo(attributes['OSMId']);
+          const wardPolygon = {
+            type: "polygon",
+            rings: coordinates,
+          };
+
+          const fillSymbol = {
+            type: "simple-fill",
+            color: attributes['color'],
+            outline: {
+              color: [255, 255, 255],
+              width: 1,
+            },
+          };
+
+          const wardPolygonGraphic = new Graphic({
+            geometry: wardPolygon,
+            symbol: fillSymbol,
+            attributes: attributes,
+            popupTemplate: {
+              title: "{Tên}",
+              content: [
+                {
+                  type: "fields",
+                  fieldInfos: [
+                    {
+                      fieldName: "Tên",
+                    },
+                    {
+                      fieldName: "Dân số",
+                    },
+                    {
+                      fieldName: "Mật độ",
+                    },
+                  ],
+                },
+              ],
+            },
+          });
+
+          view.graphics.add(wardPolygonGraphic);
+        }
+
+        function addRoadsPolyLineGraphic(attributes) {
+          const polyline = {
+            type: "polyline", // autocasts as new Polyline()
+            paths: coord,
+          };
+
+          const lineSymbol = {
+            type: "simple-line", // autocasts as SimpleLineSymbol()
+            color: attributes['Color'],
+            width: 4,
+          };
+
+          // Add the geometry and symbol to a new graphic
+          const polylineGraphic = new Graphic({
+            geometry: polyline,
+            symbol: lineSymbol,
+            attributes: attributes,
+            popupTemplate: {
+              // autocasts as new PopupTemplate()
+              title: "{Tên}",
+              content: [
+                {
+                  type: "fields",
+                  fieldInfos: [
+                    {
+                      fieldName: "Tên",
+                    },
+                    {
+                      fieldName: "Chiều dài",
+                    },
+                  ],
+                },
+              ],
+            },
+          });
+          view.graphics.add(polylineGraphic);
+        }
+
+        addWardPolygonGraphic(TanPhongWardAtt);
+        addRoadsPolyLineGraphic(NguyenThiThapAtt);
+      });
     </script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div id="viewDiv"></div>
-</body>
-
+  </body>
 </html>
