@@ -47,7 +47,7 @@
 
             const fillSymbol = {
                 type: "simple-fill",
-                color: [227, 139, 79, 0.8],
+                color: [227, 139, 79, 0.6],
                 outline: {
                     color: [255, 255, 255],
                     width: 1
@@ -103,7 +103,7 @@
             };
 
             const lineAtt = {
-                "Tên": "Huỳnh Tấn Phát",
+                "Tên": "Đường Huỳnh Tấn Phát",
                 "Chiều dài": "12,7km"
             };
 
@@ -112,7 +112,6 @@
                 symbol: lineSymbol,
                 attributes: lineAtt,
                 popupTemplate: {
-                    // autocasts as new PopupTemplate()
                     title: "{Tên}",
                     content: [
                         {
@@ -120,9 +119,6 @@
                             fieldInfos: [
                                 {
                                     fieldName: "Tên"
-                                },
-                                {
-                                    fieldName: "Owner"
                                 },
                                 {
                                     fieldName: "Chiều dài"
@@ -134,6 +130,48 @@
             });
 
             view.graphics.add(HuynhTanPhatStreetPolylineGraphic);
+
+            const TanQuyPrimarySchool = {
+                type: "point",
+                longitude: 106.704582,
+                latitude: 10.741036
+            };
+
+            const schoolMarker = {
+                type: "picture-marker",
+                url: "school.png",
+                width: "48px",
+                height: "48px",
+            };
+
+            const TanQuyPrimarySchoolAttributes = {
+                "Tên": "Trường tiểu học Tân Quy",
+                "Địa chỉ": "217/2 Lê Văn Lương - Tân Quy - Quận 7",
+            };
+
+            const TanQuyPrimarySchoolGraphic = new Graphic({
+                geometry: TanQuyPrimarySchool,
+                symbol: schoolMarker,
+                attributes: TanQuyPrimarySchoolAttributes,
+                popupTemplate: {
+                    title: "{Tên}",
+                    content: [
+                        {
+                            type: "fields",
+                            fieldInfos: [
+                                {
+                                    fieldName: "Tên"
+                                },
+                                {
+                                    fieldName: "Địa chỉ"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            });
+
+            view.graphics.add(TanQuyPrimarySchoolGraphic);
         });
     </script>
 
