@@ -1,8 +1,11 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>Thu Duc Maps</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>District 7 Maps</title>
 
     <style>
       html,
@@ -15,26 +18,184 @@
       }
     </style>
 
-    <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css">
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.27/esri/themes/light/main.css"
+    />
     <script src="https://js.arcgis.com/4.27/"></script>
 
     <script>
-      require(["esri/config", "esri/Map", "esri/views/MapView"], function(esriConfig, Map, MapView) {
+      require(["esri/Map", "esri/views/MapView", "esri/Graphic"], (
+        Map,
+        MapView,
+        Graphic
+      ) => {
         const map = new Map({
-          basemap: "hybrid"
+          basemap: "hybrid",
         });
 
         const view = new MapView({
           map: map,
-          center: [106.730573, 10.736569], // Longitude, latitude
+          center: [106.7292268, 10.7292075], // Longitude, latitude
           zoom: 15, // Zoom level
-          container: "viewDiv" // Div element
+          container: "viewDiv", // Div element
         });
 
+        const phuThuanWardOSMId = 2766949;
+        const phuThuanWardAttributes = {
+          Tên: "Phường Phú Thuận",
+          "Dân số": "12,812 người",
+          "Mật độ": "1,451 người/km²",
+          "Diện tích": "8,83 km²",
+        };
+
+        async function getGeo(OSMId) {
+          const response = await fetch(
+            `http://polygons.openstreetmap.fr/get_geojson.py?id=${OSMId}&params=0`
+          );
+          const result = await response.json();
+          return result.coordinates[0];
+        }
+
+        const fillSymbol = {
+          type: "simple-fill",
+          color: [227, 139, 79, 0.6],
+          outline: {
+            color: [255, 255, 255],
+            width: 1,
+          },
+        };
+
+        async function addWardPolygonGraphic(OSMId, attributes) {
+          const coordinates = await getGeo(OSMId);
+          const wardPolygon = {
+            type: "polygon",
+            rings: coordinates,
+          };
+
+          const wardPolygonGraphic = new Graphic({
+            geometry: wardPolygon,
+            symbol: fillSymbol,
+            attributes: attributes,
+            popupTemplate: {
+              title: "{Tên}",
+              content: [
+                {
+                  type: "fields",
+                  fieldInfos: [
+                    {
+                      fieldName: "Tên",
+                    },
+                    {
+                      fieldName: "Diện tích",
+                    },
+                    {
+                      fieldName: "Dân số",
+                    },
+                    {
+                      fieldName: "Mật độ",
+                    },
+                  ],
+                },
+              ],
+            },
+          });
+
+          view.graphics.add(wardPolygonGraphic);
+        }
+
+        addWardPolygonGraphic(phuThuanWardOSMId, phuThuanWardAttributes);
+
+        const NguyenLuongBangStreetPolyline = {
+          type: "polyline",
+          paths: [
+            [106.726174, 10.721425],
+
+            [106.719501, 10.732346],
+          ],
+        };
+
+        const lineSymbol = {
+          type: "simple-line",
+          color: [226, 119, 40],
+          width: 4,
+        };
+
+        const lineAtt = {
+          Tên: "Đường Nguyễn Lương Bằng",
+          "Chiều dài": "3 km",
+        };
+
+        const NguyenLuongBangStreetPolylineGraphic = new Graphic({
+          geometry: NguyenLuongBangStreetPolyline,
+          symbol: lineSymbol,
+          attributes: lineAtt,
+          popupTemplate: {
+            title: "{Tên}",
+            content: [
+              {
+                type: "fields",
+                fieldInfos: [
+                  {
+                    fieldName: "Tên",
+                  },
+                  {
+                    fieldName: "Chiều dài",
+                  },
+                ],
+              },
+            ],
+          },
+        });
+
+        view.graphics.add(NguyenLuongBangStreetPolylineGraphic);
+
+        const PhuThuanPrimarySchool = {
+          type: "point",
+          longitude: 106.7300794,
+          latitude: 10.736772,
+        };
+
+        const schoolMarker = {
+          type: "picture-marker",
+          url: "school.png",
+          width: "48px",
+          height: "48px",
+        };
+
+        const PhuThuanPrimarySchoolAttributes = {
+          Tên: "Trường tiểu học Phú Thuận",
+          "Địa chỉ":
+            "38B đường Nguyễn Văn Quỳ, Phú Thuận, Quận 7, Thành phố Hồ Chí Minh, Việt Nam",
+        };
+
+        const PhuThuanPrimarySchoolGraphic = new Graphic({
+          geometry: PhuThuanPrimarySchool,
+          symbol: schoolMarker,
+          attributes: PhuThuanPrimarySchoolAttributes,
+          popupTemplate: {
+            title: "{Tên}",
+            content: [
+              {
+                type: "fields",
+                fieldInfos: [
+                  {
+                    fieldName: "Tên",
+                  },
+                  {
+                    fieldName: "Địa chỉ",
+                  },
+                ],
+              },
+            ],
+          },
+        });
+
+        view.graphics.add(PhuThuanPrimarySchoolGraphic);
       });
     </script>
-
   </head>
+
   <body>
     <div id="viewDiv"></div>
   </body>
