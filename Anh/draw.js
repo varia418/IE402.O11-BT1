@@ -134,5 +134,41 @@ require([
       .catch((err) => {
         console.log(err);
       });
+      fetch("http://127.0.0.1:5500/schoolData.json")
+    .then(async function (response) {
+      let listSchool = await response.json();
+      for (let school in listSchool) {
+        // console.log(bridge);
+        const point = {
+          //Create a point
+          type: "point",
+          longitude: listSchool[school].longitude,
+          latitude: listSchool[school].latitude,
+        };
+        const simpleMarkerSymbol = {
+          type: "picture-marker",
+          url: "./Map_pin_icon_green.svg.png",
+          width: "20px",
+          height: "20px",
+        };
+        const popupTemplate = {
+          title: "{Name}",
+          content: "{Description}",
+        };
+        const attributes = {
+          Name: `${listSchool[school].name}`,
+        };
+        const pointGraphic = new Graphic({
+          geometry: point,
+          symbol: simpleMarkerSymbol,
+          attributes: attributes,
+          popupTemplate: popupTemplate,
+        });
+        graphicsLayer.add(pointGraphic);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   });
   
