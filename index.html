@@ -26,16 +26,19 @@
         "esri/Graphic",
         "esri/geometry/Polyline",
         "esri/geometry/Polygon",
-      ], function(esriConfig, Map, MapView, Graphic, Polyline, Polygon) {
+        "esri/layers/GraphicsLayer",
+        "esri/PopupTemplate",
+       
+      ], function(esriConfig, Map, MapView, Graphic, Polyline, Polygon, GraphicsLayer, PopupTemplate) {
         const map = new Map({
           basemap: "hybrid"
         });
 
         const view = new MapView({
           map: map,
-          center: [106.730573, 10.736569], // Longitude, latitude
-          zoom: 14, // Zoom level
-          container: "viewDiv" // Div element
+          center: [106.730573, 10.736569],
+          zoom: 14,
+          container: "viewDiv" 
         });
 
         //=====================================
@@ -48,7 +51,6 @@
             [106.702425, 10.749496], // Điểm 2
             [106.699855, 10.734005], // Điểm 3
             [106.701047, 10.724742], // Điểm 4
-     
           ],
         });
 
@@ -57,9 +59,17 @@
           geometry: NguyenHuuThoGeometry,
           symbol: {
             type: "simple-line",
-            color: [255, 0, 0], // Màu đường
-            width: 2, // Độ rộng của đường
+            color: [255, 0, 0], 
+            width: 2,
           },
+          attributes: {
+            name: "Đường Nguyễn Hữu Thọ, Q7.",
+            distances: " Chiều dài: x km."
+          },
+          popupTemplate: new PopupTemplate({
+            title: "{name}",
+            content: "{distances}",
+          }),
         });
 
         //=====================================
@@ -326,12 +336,22 @@
           geometry: TanThuanDongGeometry,
           symbol: {
             type: "simple-fill",
-            color: [227, 139, 79, 0.5], // Màu nền của đa giác (bao gồm cả alpha - độ trong suốt)
+            color: [227, 139, 79, 0.5], 
             outline: {
-              color: [255, 0, 0], // Màu viền
-              width: 1, // Độ rộng của viền
+              color: [255, 0, 0], 
+              width: 1, 
             },
           },
+          attributes: {
+            name: "Phường Tân Thuận Đông, Q7.",
+            areas: "Diện tích: x km vuông.",
+            populations: "Dân số: y người."
+          },
+          popupTemplate: new PopupTemplate({
+            title: "{name}",
+            content: "{areas}",
+            content: "{populations}",
+          }),
         });
 
 
@@ -394,19 +414,77 @@
           geometry: TanThuanTayGeometry,
           symbol: {
             type: "simple-fill",
-            color: [227, 139, 79, 0.5], // Màu nền của đa giác (bao gồm cả alpha - độ trong suốt)
+            color: [227, 139, 79, 0.5],
             outline: {
-              color: [255, 0, 0], // Màu viền
-              width: 1, // Độ rộng của viền
+              color: [255, 0, 0], 
+              width: 1,
             },
           },
+          attributes: {
+            name: "Phường Tân Thuận Tây, Q7.",
+            areas: "Diện tích: x km vuông.",
+            populations: "Dân số: y người."
+          },
+          popupTemplate: new PopupTemplate({
+            title: "{name}",
+            content: "{areas}",
+            content: "{populations}",
+          }),
         });
 
-        // Thêm đối tượng Graphic vào bản đồ
-        view.graphics.add(NguyenHuuThoStreet);
-        view.graphics.add(TanThuanDongWard);
-        view.graphics.add(TanThuanTayWard);
+        var School_TanThuanDong_Point = {
+          type: "point",
+          longitude: 106.729595, 
+          latitude: 10.750047
+        };
+
+        var School_TanThuanTay_Point = {
+          type: "point",
+          longitude: 106.724251,
+          latitude: 10.754413
+        };
+
+        var simpleMarkerSymbol = {
+          type: "simple-marker",
+          color: [255, 0, 0], 
+          outline: {
+            color: [255, 0, 0], 
+            width: 2          
+          }
+        };
+
+        var School_TanThuanDong = new Graphic({
+          geometry: School_TanThuanDong_Point,
+          symbol: simpleMarkerSymbol,
+          attributes: {
+            name: "Trường Tiểu học Tân Thuận Đông (cơ sở 2)",
+            description: "Đây là Trường Tiểu học Tân Thuận Đông (cơ sở 2) ở Tân Thuận Đông, Q7."
+          },
+          popupTemplate: new PopupTemplate({
+            title: "{name}",
+            content: "{description}"
+          })
+        });
+
+        var School_TanThuanTay = new Graphic({
+          geometry: School_TanThuanTay_Point,
+          symbol: simpleMarkerSymbol,
+          attributes: {
+            name: "Trường Mẫu giáo Tân Phú",
+            description: "Đây là Trường Mẫu giáo Tân Phú ở Tân Thuận Tây, Q7."
+          },
+          popupTemplate: new PopupTemplate({
+            title: "{name}",
+            content: "{description}"
+          })
+        });
         
+        // Thêm đối tượng đồ họa vào map
+        view.graphics.add(School_TanThuanDong);
+        view.graphics.add(School_TanThuanTay);
+        view.graphics.add(TanThuanTayWard);
+        view.graphics.add(TanThuanDongWard);
+        view.graphics.add(NguyenHuuThoStreet);
 
       });
     </script>
