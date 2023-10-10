@@ -1,15 +1,4 @@
-require(['esri/Map', 'esri/views/MapView', 'esri/Graphic'], (Map, MapView, Graphic) => {
-    const map = new Map({
-        basemap: 'hybrid',
-    });
-
-    const view = new MapView({
-        map: map,
-        center: [106.730573, 10.736569], // Longitude, latitude
-        zoom: 15, // Zoom level
-        container: 'viewDiv', // Div element
-    });
-
+const PhuongBinhThuan_CauPhuMy = (Graphic, view) => {
     //Trường THCS Nguyễn Hiền
     const point = {
         type: 'point',
@@ -225,4 +214,6 @@ require(['esri/Map', 'esri/views/MapView', 'esri/Graphic'], (Map, MapView, Graph
     });
 
     view.graphics.addMany([pointGraphic, pointGraphic2, polylineGraphic, polygonGraphic]);
-});
+}
+
+export default PhuongBinhThuan_CauPhuMy;

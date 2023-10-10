@@ -1,15 +1,4 @@
-require(["esri/Map", "esri/views/MapView", "esri/Graphic"], (Map, MapView, Graphic) => {
-    const map = new Map({
-        basemap: "hybrid"
-    });
-
-    const view = new MapView({
-        map: map,
-        center: [106.730573, 10.736569], // Longitude, latitude
-        zoom: 15, // Zoom level
-        container: "viewDiv" // Div element
-    });
-
+const PhuongTanQuy_DuongHuynhTanPhat = (Graphic, view) => {
     const tanQuyWardOSMId = 2766954;
     const tanQuyWardAttributes = {
         "Tên": "Phường Tân Quy",
@@ -150,4 +139,6 @@ require(["esri/Map", "esri/views/MapView", "esri/Graphic"], (Map, MapView, Graph
     });
 
     view.graphics.add(TanQuyPrimarySchoolGraphic);
-});
+}
+
+export default PhuongTanQuy_DuongHuynhTanPhat;
