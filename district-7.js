@@ -1,5 +1,6 @@
 import PhuongTanQuy_DuongHuynhTanPhat from "./19521933.js";
 import PhuongBinhThuan_CauPhuMy from "./20521239.js";
+import PhuongTanPhong_DuongNguyenThiThap from "./20521232.js";
 
 require(["esri/Map", "esri/views/MapView", "esri/Graphic"], (Map, MapView, Graphic) => {
     const map = new Map({
@@ -15,4 +16,5 @@ require(["esri/Map", "esri/views/MapView", "esri/Graphic"], (Map, MapView, Graph
 
     PhuongTanQuy_DuongHuynhTanPhat(Graphic, view);
     PhuongBinhThuan_CauPhuMy(Graphic, view);
+    PhuongTanPhong_DuongNguyenThiThap(Graphic, view);
 });
