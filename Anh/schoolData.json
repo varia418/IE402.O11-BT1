@@ -1,8 +1,10 @@
 {
-    "TruongTHCSTranQuocTuan":{"longitude":  106.7078940016474,"latitude": 10.75020870988212,"name": "Truong THCS Tran Quoc Tuan"},
-    "TruongTHCSNguyenHuuTho":{"longitude":  106.7145600589476,"latitude": 10.74836401100286,"name": "Truong THCS Nguyen Huu Tho"},
-    "TruongtieuhocLuongTheVinh":{"longitude":  106.71094306364465,"latitude": 10.74630355432823,"name": "Truong tieu hoc Luong The Vinh"},
-    "TruongdaihocCanhsatnhandan":{"longitude":  106.6970655244144,"latitude": 10.73436242942004,"name": "Truong dai hoc Canh sat nhan dan"},
-    "TruongdaihocTonDucThang":{"longitude":  106.69971225175551,"latitude": 10.73270986505651,"name": "Truong dai hoc Ton Duc Thang"},
-    "DaihocRMITNamSaiGon":{"longitude":  106.69579426840977,"latitude": 10.72957108739695,"name": "Dai hoc RMIT Nam Sai Gon"}
+    "TruongTHCSTranQuocTuan":{"longitude":  106.7078940016474,"latitude": 10.75020870988212,"name": "Trường THCS Trần Quốc Tuấn", "address": "16/1 Bế Văn Cấm, Tân Kiểng, Quận 7, Thành phố Hồ Chí Minh, Việt Nam", "phone": "02837717762"},
+    "TruongTHCSNguyenHuuTho":{"longitude":  106.7145600589476,"latitude": 10.74836401100286,"name": "Trường THCS Nguyễn Hữu Thọ", "address": "62 Đ. Lâm Văn Bền, Tân Thuận Tây, Quận 7, Thành phố Hồ Chí Minh, Việt Nam", "phone": "02838724543"},
+    "TruongtieuhocLuongTheVinh":{"longitude":  106.71094306364465,"latitude": 10.74630355432823,"name": "Trường Tiểu học Lương Thế Vinh", "address": "12 Đ. Số 10, Tân Kiểng, Quận 7, Thành phố Hồ Chí Minh, Việt Nam", "phone": "02837717706"},
+    "TruongDaihocNguyenTatThanh-CosoNguyenHuuTho":{"longitude":  106.70054937778328,"latitude": 10.74340504249545,"name": "Trường Đại học Nguyễn Tất Thành - Cơ sở Nguyễn Hữu Thọ", "address": "3F Đ. Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Thành phố Hồ Chí Minh, Việt Nam", "phone": "19002039"},
+    "TruongdaihocCanhsatnhandan":{"longitude":  106.6970655244144,"latitude": 10.73436242942004,"name": "Trường Đại học Cảnh sát nhân dân - Trụ sở chính", "address": "36 Đ. Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Thành phố Hồ Chí Minh, Việt Nam", "phone": "***"},
+    "TruongdaihocTonDucThang":{"longitude":  106.69971225175551,"latitude": 10.73270986505651,"name": "Đại học Tôn Đức Thắng","address": "19 Đ. Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Thành phố Hồ Chí Minh, Việt Nam", "phone": "19002024"},
+    "DaihocRMITNamSaiGon":{"longitude":  106.69579426840977,"latitude": 10.72957108739695,"name": "Đại Học RMIT Nam Sài Gòn", "address": "702 Đ. Nguyễn Văn Linh, Tân Hưng, Quận 7, Thành phố Hồ Chí Minh 700000, Việt Nam", "phone": "02837761300"}
+
 }
