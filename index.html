@@ -77,6 +77,13 @@
           latitude: 10.727185406736288,
         };
 
+        const THPTTanPhongAtt = 
+        {
+          "Tên": "Trường THPT Tân Phong",
+          "Địa chỉ": "19 lô F khu định cư, Ven sông, P. Tân Phong, Quận 7, Thành phố Hồ Chí Minh",
+          "SĐT": "028 3776 0138"
+        }
+
         async function getGeo(OSMId) {
           const response = await fetch(
             `http://polygons.openstreetmap.fr/get_geojson.py?id=${OSMId}&params=0`
@@ -167,7 +174,7 @@
           view.graphics.add(polylineGraphic);
         }
 
-        function addPointGraphic(attributes) {
+        function addPointGraphic(point, attributes) {
           const simpleMarkerSymbol = {
             type: "picture-marker",
             url: "school.png", // cẩn thận khi dùng absolute URL
@@ -186,13 +193,33 @@
           };
 
           const pointGraphic = new Graphic({
-            geometry: attributes,
+            geometry: point,
             symbol: simpleMarkerSymbol,
+            attributes: attributes,
+            popupTemplate: {
+              title: "{Tên}",
+              content: [
+                {
+                  type: "fields",
+                  fieldInfos: [
+                    {
+                      fieldName: "Tên",
+                    },
+                    {
+                      fieldName: "Địa chỉ",
+                    },
+                    {
+                      fieldName: "SĐT",
+                    },
+                  ],
+                },
+              ],
+            },
           });
           view.graphics.add(pointGraphic);
         }
 
-        addPointGraphic(THPTTanPhong);
+        addPointGraphic(THPTTanPhong, THPTTanPhongAtt);
         addWardPolygonGraphic(TanPhongWardAtt);
         addRoadsPolyLineGraphic(NguyenThiThapAtt);
       });
