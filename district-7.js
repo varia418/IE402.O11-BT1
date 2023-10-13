@@ -4,6 +4,7 @@ import PhuongTanPhong_DuongNguyenThiThap from "./20521232.js";
 import PhuongPhuMy_DuongLamVanBen from "./20522021.js";
 import PhuongTanThuanDong_PhuongTanThuanTay_DuongNguyenHuuTho from "./19522009.js";
 import PhuongTanPhu_DuongDaoTri from "./20520730.js";
+import PhuongPhuThuan_DuongNguyenLuongBang from "./20521571.js";
 
 require(["esri/Map", "esri/views/MapView", "esri/Graphic", "esri/geometry/Polyline",
     "esri/geometry/Polygon",
@@ -25,4 +26,5 @@ require(["esri/Map", "esri/views/MapView", "esri/Graphic", "esri/geometry/Polyli
         PhuongPhuMy_DuongLamVanBen(Graphic, view);
         PhuongTanThuanDong_PhuongTanThuanTay_DuongNguyenHuuTho(Graphic, Polyline, Polygon, PopupTemplate, view);
         PhuongTanPhu_DuongDaoTri(Graphic, view);
+        PhuongPhuThuan_DuongNguyenLuongBang(Graphic, view);
     });
