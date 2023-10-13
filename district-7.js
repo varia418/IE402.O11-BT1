@@ -5,26 +5,26 @@ import PhuongPhuMy_DuongLamVanBen from "./20522021.js";
 import PhuongTanThuanDong_PhuongTanThuanTay_DuongNguyenHuuTho from "./19522009.js";
 import PhuongTanPhu_DuongDaoTri from "./20520730.js";
 import PhuongPhuThuan_DuongNguyenLuongBang from "./20521571.js";
+import PhuongTanKieng_PhuongTanHung_DuongNguyenVanLinh from "./19521203.js";
 
-require(["esri/Map", "esri/views/MapView", "esri/Graphic", "esri/geometry/Polyline",
-    "esri/geometry/Polygon",
-    "esri/PopupTemplate"], (Map, MapView, Graphic, Polyline, Polygon, PopupTemplate) => {
-        const map = new Map({
-            basemap: "hybrid"
-        });
-
-        const view = new MapView({
-            map: map,
-            center: [106.730573, 10.736569],
-            zoom: 15,
-            container: "viewDiv"
-        });
-
-        PhuongTanQuy_DuongHuynhTanPhat(Graphic, view);
-        PhuongBinhThuan_CauPhuMy(Graphic, view);
-        PhuongTanPhong_DuongNguyenThiThap(Graphic, view);
-        PhuongPhuMy_DuongLamVanBen(Graphic, view);
-        PhuongTanThuanDong_PhuongTanThuanTay_DuongNguyenHuuTho(Graphic, Polyline, Polygon, PopupTemplate, view);
-        PhuongTanPhu_DuongDaoTri(Graphic, view);
-        PhuongPhuThuan_DuongNguyenLuongBang(Graphic, view);
+require(["esri/Map", "esri/views/MapView", "esri/Graphic", "esri/geometry/Polyline", "esri/geometry/Polygon", "esri/PopupTemplate", "esri/layers/GraphicsLayer"], (Map, MapView, Graphic, Polyline, Polygon, PopupTemplate, GraphicsLayer) => {
+    const map = new Map({
+        basemap: "hybrid"
     });
+
+    const view = new MapView({
+        map: map,
+        center: [106.730573, 10.736569],
+        zoom: 15,
+        container: "viewDiv"
+    });
+
+    PhuongTanQuy_DuongHuynhTanPhat(Graphic, view);
+    PhuongBinhThuan_CauPhuMy(Graphic, view);
+    PhuongTanPhong_DuongNguyenThiThap(Graphic, view);
+    PhuongPhuMy_DuongLamVanBen(Graphic, view);
+    PhuongTanThuanDong_PhuongTanThuanTay_DuongNguyenHuuTho(Graphic, Polyline, Polygon, PopupTemplate, view);
+    PhuongTanPhu_DuongDaoTri(Graphic, view);
+    PhuongPhuThuan_DuongNguyenLuongBang(Graphic, view);
+    PhuongTanKieng_PhuongTanHung_DuongNguyenVanLinh(Graphic, GraphicsLayer, map);
+});
